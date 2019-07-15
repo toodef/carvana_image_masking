@@ -26,7 +26,7 @@ def check_indices_for_intersection(indices: []):
 
 
 if __name__ == '__main__':
-    dataset = Dataset(is_test=False)
+    dataset = Dataset(is_hq=False)
 
     train_indices, val_indices = stratificate_dataset(dataset, [0.8, 0.2])
 
@@ -39,8 +39,8 @@ if __name__ == '__main__':
     train_path = os.path.join(dir, 'train.npy')
     val_path = os.path.join(dir, 'val.npy')
 
-    Dataset(is_test=False).set_indices(train_indices).flush_indices(train_path)
-    Dataset(is_test=False).set_indices(val_indices).flush_indices(val_path)
+    Dataset(is_hq=False).set_indices(train_indices).flush_indices(train_path)
+    Dataset(is_hq=False).set_indices(val_indices).flush_indices(val_path)
 
-    Dataset(is_test=False).load_indices(train_path, remove_unused=True)
-    Dataset(is_test=False).load_indices(val_path, remove_unused=True)
+    Dataset(is_hq=False).load_indices(train_path, remove_unused=True)
+    Dataset(is_hq=False).load_indices(val_path, remove_unused=True)
