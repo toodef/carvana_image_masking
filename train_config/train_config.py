@@ -19,7 +19,7 @@ __all__ = ['BaseTrainConfig', 'ResNet18TrainConfig', 'ResNet34TrainConfig']
 class BaseTrainConfig(TrainConfig, metaclass=ABCMeta):
     experiment_name = 'exp1'
     experiment_dir = os.path.join('experiments', experiment_name)
-    batch_size = 6
+    batch_size = 1
 
     def __init__(self, fold_indices: {}):
         model = self.create_model().cuda()
@@ -40,7 +40,7 @@ class BaseTrainConfig(TrainConfig, metaclass=ABCMeta):
         self.train_stage = TrainStage(self._train_data_producer, SegmentationMetricsProcessor('train'))
         self.val_stage = ValidationStage(self._val_data_producer, SegmentationMetricsProcessor('validation'))
 
-        loss = BCEDiceLoss(0.5, 0.5, reduction=Reduction('mean'), class_weights=[self.batch_size, 0.3, 0.7]).cuda()
+        loss = BCEDiceLoss(0.5, 0.5, reduction=Reduction('mean')).cuda()
         optimizer = Adam(params=model.parameters(), lr=1e-4)
 
         super().__init__(model, [self.train_stage, self.val_stage], loss, optimizer)
